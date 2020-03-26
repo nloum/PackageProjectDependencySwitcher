@@ -11,42 +11,6 @@ using ReactiveProcesses;
 
 namespace PackageProjectDependencySwitcher
 {
-    [Verb("package")]
-    public class PackageOptions
-    {
-        public PackageOptions(string path)
-        {
-            Path = path;
-        }
-
-        [Value(0)]
-        public string Path { get; }
-    }
-
-    [Verb("project")]
-    public class ProjectOptions
-    {
-        public ProjectOptions(string path)
-        {
-            Path = path;
-        }
-
-        [Value(0)]
-        public string Path { get; }
-    }
-    
-    [Verb("update")]
-    public class UpdateOptions
-    {
-        public UpdateOptions(string path)
-        {
-            Path = path;
-        }
-
-        [Value(0)]
-        public string Path { get; }
-    }
-    
     class Program
     {
         private static Regex _projectReference = new Regex(@"<ProjectReference Include=""(?<projectFolderPath>.+)(?<projectFileName>[^<^\^/]+)\.(?<projectFileExtension>.+)""");
