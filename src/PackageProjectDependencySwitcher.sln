@@ -2,12 +2,16 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageProjectDependencySwitcher", "PackageProjectDependencySwitcher\PackageProjectDependencySwitcher.csproj", "{208BEB57-D835-4F7F-A5B4-36CACDAD1D47}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "..\build\_build.csproj", "{D9F4A73B-539F-4AD0-9F17-80F3D04088ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9F4A73B-539F-4AD0-9F17-80F3D04088ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F4A73B-539F-4AD0-9F17-80F3D04088ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{208BEB57-D835-4F7F-A5B4-36CACDAD1D47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{208BEB57-D835-4F7F-A5B4-36CACDAD1D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{208BEB57-D835-4F7F-A5B4-36CACDAD1D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
