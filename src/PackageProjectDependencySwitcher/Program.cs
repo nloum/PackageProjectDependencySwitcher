@@ -18,7 +18,7 @@ namespace PackageProjectDependencySwitcher
         
         static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<PackageOptions, ProjectOptions>(args)
+            Parser.Default.ParseArguments<PackageOptions, ProjectOptions, UpdateOptions>(args)
                 .WithParsed<PackageOptions>(ConvertProjectReferencesToPackageReferences)
                 .WithParsed<UpdateOptions>(UpdateReferencesToProjectPackages)
                 .WithParsed<ProjectOptions>(ConvertPackageReferencesToProjectReferences);
@@ -39,14 +39,15 @@ namespace PackageProjectDependencySwitcher
 
                 if (packageVersion.Success)
                 {
-                    var regex = new Regex($"<PackageReference Include=\"{Path.GetFileNameWithoutExtension(file.ToString())}\".+/>");
+                    var regex = new Regex($"<PackageReference Include=\"{Path.GetFileNameWithoutExtension(file.ToString())}\"[^/]+/>");
 
                     filesToPackages[file] = (csprojFileText, relativeTo) =>
                     {
                         var path = file.RelativeTo(relativeTo);
 
-                        return regex.Replace(text,
+                        var result = regex.Replace(csprojFileText,
                             $"<PackageReference Include=\"{Path.GetFileNameWithoutExtension(file.ToString())}\" Version=\"{packageVersion.Groups["packageVersion"].Value}\" />");
+                        return result;
                     };
                 }
             }
@@ -86,14 +87,15 @@ namespace PackageProjectDependencySwitcher
 
                 if (packageVersion.Success)
                 {
-                    var regex = new Regex($"<PackageReference Include=\"{file.LastPathComponent()}\".+/>");
+                    var regex = new Regex($"<PackageReference Include=\"{Path.GetFileNameWithoutExtension(file.LastPathComponent())}\".+/>");
 
                     filesToPackages[file] = (csprojFileText, relativeTo) =>
                     {
                         var path = file.RelativeTo(relativeTo);
 
-                        return regex.Replace(text,
+                        var result = regex.Replace(csprojFileText,
                                 $"<ProjectReference Include=\"{path}\" />");
+                        return result;
                     };
                 }
             }
@@ -105,6 +107,11 @@ namespace PackageProjectDependencySwitcher
                 var numChanges = 0;
                 foreach (var package in filesToPackages)
                 {
+                    if (package.Key.Equals(file))
+                    {
+                        continue;
+                    }
+                    
                     var prevText = text;
                     text = package.Value(text, file.Parent().Value);
                     if (!text.Equals(prevText))
@@ -113,8 +120,11 @@ namespace PackageProjectDependencySwitcher
                         Console.WriteLine($"Changing {Path.GetFileNameWithoutExtension(file.ToString())}'s dependency on {Path.GetFileNameWithoutExtension(package.Key.ToString())} from a project reference to a package reference");
                     }
                 }
-                
-                file.WriteAllText(text);
+
+                if (numChanges > 0)
+                {
+                    file.WriteAllText(text);
+                }
             }
         }
         
