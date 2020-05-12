@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text.RegularExpressions;
 using CommandLine;
-using MoreIO;
+using IoFluently;
 using ReactiveProcesses;
 
 namespace PackageProjectDependencySwitcher
@@ -28,9 +27,9 @@ namespace PackageProjectDependencySwitcher
         {
             var ioService = new IoService(new ReactiveProcessFactory());
             
-            var files = Directory.GetFiles(options.Path, "*.csproj", SearchOption.AllDirectories).Select(x => ioService.ToPath(x).Value).ToImmutableList();
+            var files = Directory.GetFiles(options.Path, "*.csproj", SearchOption.AllDirectories).Select(x => ioService.ToAbsolutePath(x)).ToImmutableList();
 
-            var filesToPackages = new Dictionary<PathSpec, Func<string, PathSpec, string>>();
+            var filesToPackages = new Dictionary<AbsolutePath, Func<string, AbsolutePath, string>>();
             
             foreach (var file in files)
             {
@@ -76,9 +75,9 @@ namespace PackageProjectDependencySwitcher
         {
             var ioService = new IoService(new ReactiveProcessFactory());
             
-            var files = Directory.GetFiles(options.Path, "*.csproj", SearchOption.AllDirectories).Select(x => ioService.ToPath(x).Value).ToImmutableList();
+            var files = Directory.GetFiles(options.Path, "*.csproj", SearchOption.AllDirectories).Select(x => ioService.ToAbsolutePath(x)).ToImmutableList();
 
-            var filesToPackages = new Dictionary<PathSpec, Func<string, PathSpec, string>>();
+            var filesToPackages = new Dictionary<AbsolutePath, Func<string, AbsolutePath, string>>();
             
             foreach (var file in files)
             {
