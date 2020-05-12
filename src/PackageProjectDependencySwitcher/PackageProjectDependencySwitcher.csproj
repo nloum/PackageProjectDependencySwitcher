@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <PackageVersion>1.0.0-alpha001</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="CommandLineParser" Version="2.7.82" />
-      <PackageReference Include="IoFluently" Version="1.0.0-alpha008" />
+      <PackageReference Include="IoFluently" Version="1.0.0-alpha012" />
     </ItemGroup>
 
 </Project>
