@@ -12,7 +12,7 @@ namespace PackageProjectDependencySwitcher
         private static Regex _projectReference = new Regex(@"<ProjectReference Include=""(?<projectFolderPath>.+)(?<projectFileName>[^<^\^/]+)\.(?<projectFileExtension>.+)""");
         private static Regex _packageVersion = new Regex(@"<PackageVersion>(?<packageVersion>[^<]+)</PackageVersion>");
 
-        public void ConvertProjectReferencesToPackageReferences(AbsolutePath solutionFolder, Func<AbsolutePath, string, bool> referencePredicate, bool backup)
+        public void ConvertToProjectReferences(AbsolutePath solutionFolder, Func<AbsolutePath, string, bool> referencePredicate, bool backup)
         {
             var files = solutionFolder.GetDescendants("*.csproj").ToImmutableList();
 
