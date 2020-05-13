@@ -180,8 +180,6 @@ class Build : NukeBuild
 		//.Requires(() => Configuration == Configuration.Release)
         .Executes(() =>
         {
-	        DeleteDirectory(ArtifactsDirectory);
-	        
             DotNetPack(s => s
                 .EnableNoRestore()
                 .EnableNoBuild()
