@@ -207,8 +207,7 @@ class Build : NukeBuild
 				)
             );
         });
-
-
+    
     public GitVersion GitVersion
     {
 	    get
